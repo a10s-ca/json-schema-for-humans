@@ -356,6 +356,18 @@ class MarkdownTemplate(object):
                         line.append("In " + sub_property.ref_path)
                     else:
                         line.append("-")
+                elif field == "Définition":
+                    # Link
+                    if sub_property.should_be_a_link(self.config):
+                        assert sub_property.links_to
+                        line.append(
+                            "Comme "
+                            + self.format_link(sub_property.links_to.link_name, sub_property.links_to.html_id)
+                        )
+                    elif sub_property.refers_to:
+                        line.append(self.format_link(sub_property.links_to.property_name, sub_property.ref_path))
+                    else:
+                        line.append("-")
                 elif field == "Title/Description":
                     # title or description
                     description = sub_property.description or "-"
