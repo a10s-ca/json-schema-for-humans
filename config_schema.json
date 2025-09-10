@@ -144,11 +144,15 @@
             "type": "string",
             "enum": [
               "Property",
+              "Propriété",
               "Pattern",
               "Type",
+              "Type de donnée",
               "Deprecated",
               "Definition",
-              "Title/Description"
+              "Définition",
+              "Title/Description",
+              "Description"
             ]
           }
         }
