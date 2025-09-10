@@ -382,7 +382,7 @@ class MarkdownTemplate(object):
                     if sub_property.refers_to:
                         line.append(self.format_link(sub_property.links_to.property_name, sub_property.ref_path))
                     elif sub_property.array_items_def:
-                        line.append(self.format_link(sub_property.array_items_def[0].links_to.property_name, sub_property.array_items_def[0].ref_path))
+                        line.append(self.format_link(escape_for_table("Voir les détails"), sub_property.html_id))
                     else:
                         line.append("-")
                 elif field == "Title/Description":
