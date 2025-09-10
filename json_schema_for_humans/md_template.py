@@ -380,7 +380,7 @@ class MarkdownTemplate(object):
                     #    )
                     #elif sub_property.refers_to:
                     if sub_property.refers_to:
-                        line.append(self.format_link(sub_property.links_to.property_name, sub_property.ref_path))
+                        line.append(self.format_link(sub_property.links_to.property_name, self.fix_md_path(sub_property.ref_path)))
                     elif sub_property.array_items_def:
                         line.append(self.format_link(escape_for_table("Voir les détails"), sub_property.html_id))
                     else:
@@ -404,6 +404,11 @@ class MarkdownTemplate(object):
             properties.insert(0, headers)
 
         return properties
+
+    def fix_md_path(self, link):
+        res = link.replace(".schema.json", "/")
+        res = res.replace("#./", "../")
+        return res
 
     def type_info_table(self, schema: SchemaNode) -> List[List]:
         """
