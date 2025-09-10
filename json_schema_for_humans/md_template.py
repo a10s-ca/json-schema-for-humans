@@ -331,6 +331,13 @@ class MarkdownTemplate(object):
                         escape_for_table(sub_property.property_name), sub_property.html_id
                     )
                     line.append(property_name)
+                if field == "Propriété":
+                    # property name
+                    property_name = "+ " if sub_property.is_required_property else "- "
+                    property_name += self.format_link(
+                        escape_for_table(sub_property.property_name), sub_property.html_id
+                    )
+                    line.append(property_name)
                 elif field == "Pattern":
                     # pattern
                     line.append("Yes" if sub_property.is_pattern_property else "No")
@@ -338,6 +345,13 @@ class MarkdownTemplate(object):
                     # type
                     line.append(
                         "Combination"
+                        if jinja_filters.is_combining(sub_property)
+                        else escape_for_table(sub_property.type_name)
+                    )
+                elif field == "Type de donnée":
+                    # type
+                    line.append(
+                        "Combinaison"
                         if jinja_filters.is_combining(sub_property)
                         else escape_for_table(sub_property.type_name)
                     )
@@ -358,21 +372,26 @@ class MarkdownTemplate(object):
                         line.append("-")
                 elif field == "Définition":
                     # Link
-                    if sub_property.should_be_a_link(self.config):
-                        assert sub_property.links_to
-                        line.append(
-                            "Comme "
-                            + self.format_link(sub_property.links_to.link_name, sub_property.links_to.html_id)
-                        )
-                    elif sub_property.refers_to:
+                    #if sub_property.should_be_a_link(self.config):
+                    #    assert sub_property.links_to
+                    #    line.append(
+                    #        "Comme "
+                    #        + self.format_link(sub_property.links_to.link_name, sub_property.links_to.html_id)
+                    #    )
+                    #elif sub_property.refers_to:
+                    if sub_property.refers_to:
                         line.append(self.format_link(sub_property.links_to.property_name, sub_property.ref_path))
+                    elif sub_property.items[0].refers_to:
+                        line.append(self.format_link(sub_property.items[0].links_to.property_name, sub_property.item[0].ref_path))
                     else:
                         line.append("-")
                 elif field == "Title/Description":
                     # title or description
                     description = sub_property.description or "-"
-                    if sub_property.title:
-                        description = sub_property.title
+                    line.append(escape_for_table(description))
+                elif field == "Description":
+                    # description
+                    description = sub_property.description or "-"
                     line.append(escape_for_table(description))
                 else:
                     raise ValueError(f"Unknown field {field} for properties table")
