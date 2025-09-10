@@ -406,8 +406,7 @@ class MarkdownTemplate(object):
         return properties
 
     def fix_md_path(self, link):
-        res = link.replace(".schema.json", "/")
-        res = res.replace("#./", "../")
+        res = link.replace("#./", "../").replace(".schema.json", "/")
         return res
 
     def type_info_table(self, schema: SchemaNode) -> List[List]:
