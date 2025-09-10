@@ -66,7 +66,7 @@
         {% include "section_one_of.md" %}
     {%- endif %}
     {%- if schema.is_const -%}
-        Specific value: `{{ schema.const_value | python_to_json }}`
+        Valeur fixe: `{{ schema.const_value | python_to_json }}`
     {%- endif -%}
 
     {# Conditional subschema, or if-then-else section #}
