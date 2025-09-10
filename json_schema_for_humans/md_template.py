@@ -380,7 +380,7 @@ class MarkdownTemplate(object):
                     #    )
                     #elif sub_property.refers_to:
                     if sub_property.refers_to:
-                        line.append(self.format_link(sub_property.links_to.property_name, self.fix_md_path(sub_property.ref_path)))
+                        line.append(self.format_link(sub_property.links_to.link_name, self.fix_md_path(sub_property.ref_path)))
                     elif sub_property.array_items_def:
                         line.append(self.format_link(escape_for_table("Voir les détails"), sub_property.html_id))
                     else:
@@ -432,7 +432,7 @@ class MarkdownTemplate(object):
             ["**Type**", "`combinaison`" if jinja_filters.is_combining(merged_schema) else f"`{schema_type}`"]
         )
         if not self.config.md_badge_as_image:
-            type_info.append(["**Requis**", "Oui" if schema.is_required_property else "No"])
+            type_info.append(["**Requis**", "Oui" if schema.is_required_property else "Non"])
         if jinja_filters.deprecated(self.config, merged_schema):
             type_info.append(["**Retiré**"])
             if self.config.md_badge_as_image:
