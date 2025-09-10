@@ -1,4 +1,4 @@
-**Example{% if examples|length > 1 %}s{% endif %}:**{{- "" -}}
+**Exemple{% if examples|length > 1 %}s{% endif %}:**{{- "" -}}
 
 {% for example in examples %}
     {%- if loop.first %}{{ "\n\n" }}{% endif -%}

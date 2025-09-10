@@ -19,9 +19,9 @@
   {%- endfilter %}
 
   {% if sub_property.is_pattern_property %}
-> All properties whose name matches the regular expression
+> Toutes les propriétés dont le nom correspond à l'expression régulière
 ```{{ sub_property.property_name }}``` ([Test](https://regex101.com/?regex={{ sub_property.property_name | urlencode }}))
-must respect the following conditions
+doit respecter les conditions suivantes
   {% endif %}
 
 
