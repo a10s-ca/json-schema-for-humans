@@ -331,7 +331,7 @@ class MarkdownTemplate(object):
                         escape_for_table(sub_property.property_name), sub_property.html_id
                     )
                     line.append(property_name)
-                if field == "Propriété":
+                elif field == "Propriété":
                     # property name
                     property_name = "+ " if sub_property.is_required_property else "- "
                     property_name += self.format_link(
