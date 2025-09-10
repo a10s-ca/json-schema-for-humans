@@ -381,8 +381,8 @@ class MarkdownTemplate(object):
                     #elif sub_property.refers_to:
                     if sub_property.refers_to:
                         line.append(self.format_link(sub_property.links_to.property_name, sub_property.ref_path))
-                    elif sub_property.items[0].refers_to:
-                        line.append(self.format_link(sub_property.items[0].links_to.property_name, sub_property.item[0].ref_path))
+                    elif sub_property.array_items_def:
+                        line.append(self.format_link(sub_property.array_items_def[0].links_to.property_name, sub_property.array_items_def[0].ref_path))
                     else:
                         line.append("-")
                 elif field == "Title/Description":
