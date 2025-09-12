@@ -451,7 +451,7 @@ class MarkdownTemplate(object):
             html_id = schema.links_to.html_id
             type_info.append(["**Même définition que**", f"[{ schema_link_name }](#{ html_id })"])
         elif schema.refers_to:
-            type_info.append(["**Défini dans**", f"[{ schema.links_to.link_name }](#{ schema.ref_path })"])
+            type_info.append(["**Défini dans**", f"[{ schema.links_to.link_name }]({ schema.ref_path })"])
 
         return type_info
 
