@@ -300,6 +300,11 @@ class MarkdownTemplate(object):
         """Format a Markdown link"""
         return f"[{title}](#{link} {tooltip})"
 
+    @staticmethod
+    def format_page_link(title: str, link: str, tooltip: str = "") -> str:
+        """Format a Markdown link to another page"""
+        return f"[{title}]({link} {tooltip})"
+
     def badge(self, name: str, color: str, value: str = "") -> str:
         """
         Badge as markdown image link
@@ -380,7 +385,7 @@ class MarkdownTemplate(object):
                     #    )
                     #elif sub_property.refers_to:
                     if sub_property.refers_to:
-                        line.append(self.format_link(sub_property.links_to.title, self.fix_md_path(sub_property.ref_path)))
+                        line.append(self.format_page_link(sub_property.links_to.title, self.fix_md_path(sub_property.ref_path)))
                     elif sub_property.array_items_def:
                         line.append(self.format_link(escape_for_table("Voir les détails"), sub_property.html_id))
                     else:
@@ -406,7 +411,7 @@ class MarkdownTemplate(object):
         return properties
 
     def fix_md_path(self, link):
-        res = link.replace("#", ".").replace(".schema.json", "/")
+        res = link.replace(".schema.json", "/")
         return res
 
     def type_info_table(self, schema: SchemaNode) -> List[List]:
@@ -450,7 +455,7 @@ class MarkdownTemplate(object):
             html_id = schema.links_to.html_id
             type_info.append(["**Même définition que**", f"[{ schema_link_name }](#{ html_id })"])
         elif schema.refers_to:
-            type_info.append(["**Défini dans**", schema.ref_path])
+            type_info.append(["**Défini dans**", f"[{ schema_link_name }](#{ schema.ref_path })"]])
 
         return type_info
 
