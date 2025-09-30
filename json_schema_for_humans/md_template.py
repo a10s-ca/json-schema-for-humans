@@ -391,7 +391,9 @@ class MarkdownTemplate(object):
                     else:
                         line.append("-")
                     if sub_property.examples:
-                        line.append(sub_property.examples)
+                        line.append("Exemples:")
+                        for example in sub_property.examples:
+                            line.append(str(example))
                 elif field == "Title/Description":
                     # title or description
                     description = sub_property.description or "-"
