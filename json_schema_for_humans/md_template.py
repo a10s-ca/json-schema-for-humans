@@ -390,6 +390,8 @@ class MarkdownTemplate(object):
                         line.append(self.format_link(escape_for_table("Voir les détails"), sub_property.html_id))
                     else:
                         line.append("-")
+                    if sub_property.examples:
+                        line.append(sub_property.examples)
                 elif field == "Title/Description":
                     # title or description
                     description = sub_property.description or "-"
