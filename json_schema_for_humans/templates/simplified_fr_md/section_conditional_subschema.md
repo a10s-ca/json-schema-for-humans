@@ -1,25 +1,17 @@
 {% if schema.kw_if %}
-    ICI ON VA FAIRE DES MODIFICATIONS!
     {% set first_property =  schema.kw_if | get_first_property %}
-
     {% if schema.kw_then %}
-        {%- filter md_heading(depth) -%}If (
-            {{- first_property.property_name | md_escape_for_table -}}
-            {{- " = " -}}
-            {{- first_property.const_value | python_to_json -}}
-        ){%- endfilter -%}
-        {% with schema=schema.kw_then, skip_headers=False, depth=depth %}
-            {% include "content.md" %}
-        {% endwith %}
+Si ({{ first_property.property_name }} = {{ first_property.const_value | python_to_json }}) alors les propriétés suivantes sont obligatoires
+{% set required_props = schema.kw_then.required %}
+{% if required_props %}
+* {{ required_props | join('\n* ') }}
+{% endif %}
     {% endif %}
     {% if schema.kw_else %}
-        {%- filter md_heading(depth) -%}Else (i.e. {{ " " }}
-            {{- first_property.property_name | md_escape_for_table -}}
-            {{- " != " -}}
-            {{- first_property.const_value | python_to_json -}}
-        ){%- endfilter -%}
-        {% with schema=schema.kw_else, skip_headers=False, depth=depth %}
-            {% include "content.md" %}
-        {% endwith %}
+Sinon ({{ first_property.property_name }} ≠ {{ first_property.const_value | python_to_json }}) alors les propriétés suivantes sont obligatoires
+{% set required_props = schema.kw_else.required %}
+{% if required_props %}
+* {{ required_props | join('\n* ') }}
+{% endif %}
     {% endif %}
 {% endif %}
