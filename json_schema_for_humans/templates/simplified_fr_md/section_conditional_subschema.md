@@ -29,6 +29,7 @@ si ({{ first_property.property_name }} = {{ first_property.const_value | python_
 {% endif %}
     {% endif %}
     {% if schema.kw_else %}
+
 Sinon ({{ first_property.property_name }} ≠ {{ first_property.const_value | python_to_json }}) alors :
 
 {% set required_props = schema.kw_else.required_properties %}

@@ -32,9 +32,7 @@
 
 {% if schema.should_be_a_link(config) %}
 {% elif schema.refers_to -%}
-    {%- with schema=schema.refers_to_merged, skip_headers=True, depth=depth -%}
-        {% include "content.md" %}
-    {% endwith %}
+    [Voir la documentation de {{ schema.links_to.title or schema.links_to.file_name }}]({{ schema.ref_path }})
 {% else %}
     {# Properties, pattern properties, additional properties #}
     {% if schema.is_object %}
