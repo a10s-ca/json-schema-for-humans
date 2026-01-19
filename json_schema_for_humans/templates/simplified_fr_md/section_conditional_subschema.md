@@ -1,4 +1,5 @@
 {% if schema.kw_if %}
+    ICI ON VA FAIRE DES MODIFICATIONS!
     {% set first_property =  schema.kw_if | get_first_property %}
 
     {% if schema.kw_then %}
