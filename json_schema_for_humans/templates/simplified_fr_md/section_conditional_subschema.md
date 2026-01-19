@@ -5,14 +5,18 @@ Condition particulière:
 Si ({{ first_property.property_name }} = {{ first_property.const_value | python_to_json }}) alors les propriétés suivantes sont obligatoires
 {% set required_props = schema.kw_then.kw_required %}
 {% if required_props %}
-* {{ required_props | join('\n* ') }}
+{% for prop in required_props %}
+* {{ prop }}
+{% endfor %}
 {% endif %}
     {% endif %}
     {% if schema.kw_else %}
 Sinon ({{ first_property.property_name }} ≠ {{ first_property.const_value | python_to_json }}) alors les propriétés suivantes sont obligatoires
 {% set required_props = schema.kw_else.kw_required %}
 {% if required_props %}
-* {{ required_props | join('\n* ') }}
+{% for prop in required_props %}
+* {{ prop }}
+{% endfor %}
 {% endif %}
     {% endif %}
 {% endif %}
