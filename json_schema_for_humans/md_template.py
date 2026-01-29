@@ -338,11 +338,13 @@ class MarkdownTemplate(object):
                     line.append(property_name)
                 elif field == "Propriété":
                     # property name
-                    property_name = "+ " if sub_property.is_required_property else "- "
-                    property_name += self.format_link(
+                    property_name = self.format_link(
                         escape_for_table(sub_property.property_name), sub_property.html_id
                     )
                     line.append(property_name)
+                    titre = sub_property.title
+                    if titre:
+                        line.append("(" + escape_for_table(titre) + ")")
                 elif field == "Pattern":
                     # pattern
                     line.append("Yes" if sub_property.is_pattern_property else "No")
@@ -390,6 +392,15 @@ class MarkdownTemplate(object):
                         line.append(self.format_link(escape_for_table("Voir les détails"), sub_property.html_id))
                     else:
                         line.append("-")
+                elif field == "Type et définition":
+                    # type
+                    object_type = escape_for_table(sub_property.type_name)
+                    if sub_property.refers_to:
+                        line.append(self.format_page_link(sub_property.links_to.title, sub_property.ref_path))
+                    elif sub_property.array_items_def:
+                        line.append(self.format_link(escape_for_table("Tableau de "), sub_property.title))
+                    else:
+                        line.append("-")
                 elif field == "Title/Description":
                     # title or description
                     description = sub_property.description or "-"
@@ -402,6 +413,16 @@ class MarkdownTemplate(object):
                     # titre
                     titre = sub_property.title or "-"
                     line.append(escape_for_table(titre))
+                elif field == "Priorité":
+                    priorite = "Obligatoire" if sub_property.is_required_property else "Optionnel"
+                    line.append(escape_for_table(priorite))
+                    minItems = sub_property.kw_min_items.literal if sub_property.kw_min_items else "0"
+                    maxItems = sub_property.kw_min_items.literal if sub_property.kw_min_items else "N"
+                    if sub_property.type_name == "array":
+                        line.append(str(minItems) + ".." + str(maxItems) + " items")
+                    else:
+                        line.append("1")
+
                 else:
                     raise ValueError(f"Unknown field {field} for properties table")
 
