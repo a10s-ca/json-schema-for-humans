@@ -341,10 +341,10 @@ class MarkdownTemplate(object):
                     property_name = self.format_link(
                         escape_for_table(sub_property.property_name), sub_property.html_id
                     )
-                    line.append(property_name)
                     titre = sub_property.title
                     if titre:
-                        line.append("(" + escape_for_table(titre) + ")")
+                        property_name += " (" + escape_for_table(titre) + ")"
+                    line.append(property_name)
                 elif field == "Pattern":
                     # pattern
                     line.append("Yes" if sub_property.is_pattern_property else "No")
@@ -415,14 +415,12 @@ class MarkdownTemplate(object):
                     line.append(escape_for_table(titre))
                 elif field == "Priorité":
                     priorite = "Obligatoire" if sub_property.is_required_property else "Optionnel"
-                    line.append(escape_for_table(priorite))
+
                     minItems = sub_property.kw_min_items.literal if sub_property.kw_min_items else "0"
                     maxItems = sub_property.kw_min_items.literal if sub_property.kw_min_items else "N"
                     if sub_property.type_name == "array":
-                        line.append(str(minItems) + ".." + str(maxItems) + " items")
-                    else:
-                        line.append("1")
-
+                        priorite += " (" + str(minItems) + ".." + str(maxItems) + ")"
+                    line.append(escape_for_table(priorite))
                 else:
                     raise ValueError(f"Unknown field {field} for properties table")
 
