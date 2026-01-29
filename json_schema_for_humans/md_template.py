@@ -395,8 +395,12 @@ class MarkdownTemplate(object):
                 elif field == "Type et définition":
                     # type
                     object_type = escape_for_table(sub_property.type_name)
-                    if sub_property.refers_to:
-                        line.append(self.format_page_link(sub_property.links_to.title, sub_property.ref_path))
+                    if sub_property.type_name == "array":
+                        if sub_property.refers_to:
+                            target = sub_property.ref_path
+                        else:
+                            target = sub_property.html_id
+                        line.append(self.format_link(escape_for_table("Tableau de " + sub_property.title), target))
                     elif sub_property.array_items_def:
                         line.append(self.format_link(escape_for_table("Tableau de "), sub_property.title))
                     else:
@@ -417,6 +421,7 @@ class MarkdownTemplate(object):
                     priorite = "Obligatoire" if sub_property.is_required_property else "Optionnel"
 
                     minItems = sub_property.kw_min_items.literal if sub_property.kw_min_items else "0"
+                    minItems = "1" if sub_property.is_required_property
                     maxItems = sub_property.kw_min_items.literal if sub_property.kw_min_items else "N"
                     if sub_property.type_name == "array":
                         priorite += " (" + str(minItems) + ".." + str(maxItems) + ")"
