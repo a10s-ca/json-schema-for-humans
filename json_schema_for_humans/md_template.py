@@ -421,7 +421,8 @@ class MarkdownTemplate(object):
                     priorite = "Obligatoire" if sub_property.is_required_property else "Optionnel"
 
                     minItems = sub_property.kw_min_items.literal if sub_property.kw_min_items else "0"
-                    minItems = "1" if sub_property.is_required_property
+                    if sub_property.is_required_property:
+                        minItems = "1"
                     maxItems = sub_property.kw_min_items.literal if sub_property.kw_min_items else "N"
                     if sub_property.type_name == "array":
                         priorite += " (" + str(minItems) + ".." + str(maxItems) + ")"
