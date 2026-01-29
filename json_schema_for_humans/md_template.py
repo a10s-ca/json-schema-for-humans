@@ -398,6 +398,10 @@ class MarkdownTemplate(object):
                     # description
                     description = sub_property.description or "-"
                     line.append(escape_for_table(description))
+                elif field == "Titre":
+                    # titre
+                    titre = sub_property.title or "-"
+                    line.append(escape_for_table(titre))
                 else:
                     raise ValueError(f"Unknown field {field} for properties table")
 
