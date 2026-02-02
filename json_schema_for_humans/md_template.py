@@ -5,7 +5,7 @@ import jinja2
 
 from json_schema_for_humans import const, jinja_filters
 from json_schema_for_humans.schema.schema_node import SchemaNode
-from json_schema_for_humans.templating_utils import schema_keyword_to_int
+from json_schema_for_humans.templating_utils import schema_keyword_to_int, schema_keyword_to_str
 
 
 def get_numeric_maximum_restriction(schema_node: SchemaNode, default: str = "N/A") -> str:
@@ -341,7 +341,7 @@ class MarkdownTemplate(object):
                     property_name = self.format_link(
                         escape_for_table(sub_property.property_name), sub_property.html_id
                     )
-                    titre = sub_property.title
+                    titre = schema_keyword_to_str(sub_property, "title")
                     if titre:
                         property_name += " (" + escape_for_table(titre) + ")"
                     line.append(property_name)
@@ -396,11 +396,9 @@ class MarkdownTemplate(object):
                     # type
                     if sub_property.refers_to:
                         link_name = (
-                            sub_property.links_to.link_name
-                            if sub_property.links_to
-                            else sub_property.title or sub_property.property_name or "type"
+                            sub_property.title or sub_property.property_name
                         )
-                        link_text = escape_for_table(f"Objet {link_name}")
+                        link_text = escape_for_table(f"{link_name}")
                         if sub_property.ref_path:
                             line.append(self.format_page_link(link_text, sub_property.ref_path))
                         elif sub_property.links_to:
@@ -415,11 +413,11 @@ class MarkdownTemplate(object):
                                 if item_def.links_to
                                 else item_def.title or item_def.property_name or item_def.name_for_breadcrumbs or "objet"
                             )
-                            link_text = escape_for_table(f"Tableau d'objets de type {item_name}")
+                            link_text = escape_for_table(f"{item_name}")
                             if item_def.ref_path:
-                                line.append(self.format_page_link(link_text, item_def.ref_path))
+                                line.append("Tableau d'objets de type " + self.format_page_link(link_text, item_def.ref_path))
                             else:
-                                line.append(self.format_link(link_text, item_def.html_id))
+                                line.append("Tableau d'objets de type " + self.format_link(link_text, item_def.html_id))
                         else:
                             line.append(escape_for_table("Tableau d'objets"))
                     else:
