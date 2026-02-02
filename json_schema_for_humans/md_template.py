@@ -396,13 +396,9 @@ class MarkdownTemplate(object):
                     # type
                     if sub_property.refers_to:
                         link_name = (
-                            sub_property.links_to.link_name
-                            if sub_property.links_to
-                            else (
-                                sub_property.refers_to.title
-                                or sub_property.refers_to.definition_name
-                                or sub_property.ref_path
-                            )
+                            sub_property.refers_to.title
+                            or sub_property.refers_to.definition_name
+                            or sub_property.ref_path
                         )
                         link_text = escape_for_table(link_name)
                         if sub_property.ref_path:
