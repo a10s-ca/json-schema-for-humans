@@ -394,15 +394,34 @@ class MarkdownTemplate(object):
                         line.append("-")
                 elif field == "Type et définition":
                     # type
-                    object_type = escape_for_table(sub_property.type_name)
-                    if sub_property.type_name == "array":
-                        if sub_property.refers_to:
-                            target = sub_property.ref_path
+                    if sub_property.refers_to:
+                        link_name = (
+                            sub_property.links_to.link_name
+                            if sub_property.links_to
+                            else sub_property.title or sub_property.property_name or "type"
+                        )
+                        link_text = escape_for_table(f"Objet {link_name}")
+                        if sub_property.ref_path:
+                            line.append(self.format_page_link(link_text, sub_property.ref_path))
+                        elif sub_property.links_to:
+                            line.append(self.format_link(link_text, sub_property.links_to.html_id))
                         else:
-                            target = sub_property.html_id
-                        line.append(self.format_link(escape_for_table("Tableau de " + sub_property.title), target))
-                    elif sub_property.array_items_def:
-                        line.append(self.format_link(escape_for_table("Tableau de "), sub_property.title))
+                            line.append(link_text)
+                    elif sub_property.type_name == "array":
+                        item_def = sub_property.array_items_def
+                        if item_def:
+                            item_name = (
+                                item_def.links_to.link_name
+                                if item_def.links_to
+                                else item_def.title or item_def.property_name or item_def.name_for_breadcrumbs or "objet"
+                            )
+                            link_text = escape_for_table(f"Tableau d'objets de type {item_name}")
+                            if item_def.ref_path:
+                                line.append(self.format_page_link(link_text, item_def.ref_path))
+                            else:
+                                line.append(self.format_link(link_text, item_def.html_id))
+                        else:
+                            line.append(escape_for_table("Tableau d'objets"))
                     else:
                         line.append("-")
                 elif field == "Title/Description":
