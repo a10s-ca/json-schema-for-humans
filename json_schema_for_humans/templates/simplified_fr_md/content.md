@@ -14,10 +14,6 @@
 {% set keys = schema.keywords %}
 {%- if not skip_headers %}
 
-{% if depth > 0 %}
-{{ schema.title }}
-{% endif %}
-
 {% set description = (schema | get_description) %}
 {% include "section_description.md" %}
 {% endif %}
