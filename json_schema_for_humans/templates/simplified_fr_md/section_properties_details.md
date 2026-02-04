@@ -13,7 +13,7 @@
         {{ required_badge if sub_property.is_required_property else optional_badge -}}{{ ' ' }}
       {%- endif -%}
       {%- if sub_property is deprecated  -%}~~ {%- endif -%}
-      {%- if sub_property.is_pattern_property %}Pattern {% endif %}Propriété `{% with schema=sub_property %}{%- include "breadcrumbs.md" %}{% endwith %}`{%- if sub_property.title %}{{ sub_property.title }}{% endwith %}
+      {%- if sub_property.is_pattern_property %}Pattern {% endif %}Propriété `{% with schema=sub_property %}{%- include "breadcrumbs.md" %}{% endwith %}`{%- if sub_property.title %}{{ sub_property.title }}{% endif %}
       {%- if sub_property is deprecated -%}~~{%- endif -%}
     {%- endfilter %}
   {%- endfilter %}
