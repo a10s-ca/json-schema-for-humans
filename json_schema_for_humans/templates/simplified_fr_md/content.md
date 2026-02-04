@@ -14,15 +14,12 @@
 {% set keys = schema.keywords %}
 {%- if not skip_headers %}
 
-{% if schema.title and schema.title | length > 0 %}
-**Nom:** {{ schema.title }}
+{% set description = (schema | get_description) %}
+{% include "section_description.md" %}
 {% endif %}
 
 {{ schema | md_type_info_table | md_generate_table }}
 
-{% set description = (schema | get_description) %}
-{% include "section_description.md" %}
-{% endif %}
 
 {# Display examples #}
 {% set examples = schema.examples %}
