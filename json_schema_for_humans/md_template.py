@@ -423,7 +423,10 @@ class MarkdownTemplate(object):
                         else:
                             line.append(escape_for_table("Tableau d'objets"))
                     else:
-                        line.append(escape_for_table(sub_property.type_name))
+                        type_def = sub_property.type_name
+                        if sub_property.format:
+                            type_def += f" ({sub_property.format})"
+                        line.append(escape_for_table(type_def))
                 elif field == "Title/Description":
                     # title or description
                     description = sub_property.description or "-"
