@@ -15,7 +15,7 @@
 {%- if not skip_headers %}
 
 {% if depth > 0 %}
-    {{ schema.title }}
+{{ schema.title }}
 {% endif %}
 
 {% set description = (schema | get_description) %}
