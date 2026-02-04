@@ -343,7 +343,7 @@ class MarkdownTemplate(object):
                     )
                     titre = schema_keyword_to_str(sub_property, "title")
                     if titre:
-                        property_name += " (" + escape_for_table(titre) + ")"
+                        property_name += "<br/>_" + escape_for_table(titre) + "_"
                     line.append(property_name)
                 elif field == "Pattern":
                     # pattern
@@ -423,7 +423,7 @@ class MarkdownTemplate(object):
                         else:
                             line.append(escape_for_table("Tableau d'objets"))
                     else:
-                        line.append("-")
+                        line.append(escape_for_table(sub_property.type_name))
                 elif field == "Title/Description":
                     # title or description
                     description = sub_property.description or "-"
